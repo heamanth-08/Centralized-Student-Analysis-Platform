@@ -28,6 +28,12 @@ class LoginRequest(BaseModel):
     username: str
     password: str
 
+class RegisterRequest(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50)
+    email: EmailStr
+    full_name: str = Field(..., min_length=2, max_length=100)
+    password: str = Field(..., min_length=6, max_length=72)
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"

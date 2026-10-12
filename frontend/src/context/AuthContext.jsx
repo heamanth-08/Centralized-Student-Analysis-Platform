@@ -64,6 +64,15 @@ export const AuthProvider = ({ children }) => {
     return res.user;
   };
 
+  const register = async (username, email, fullName, password) => {
+    const res = await api.auth.register(username, email, fullName, password);
+    setToken(res.access_token);
+    setUser(res.user);
+    localStorage.setItem('campusiq_token', res.access_token);
+    localStorage.setItem('campusiq_user', JSON.stringify(res.user));
+    return res.user;
+  };
+
   const logout = async () => {
     try {
       if (token) await api.auth.logout();
@@ -99,6 +108,7 @@ export const AuthProvider = ({ children }) => {
         darkMode,
         toggleDarkMode,
         login,
+        register,
         logout,
         demoLogin,
         isAuthenticated: !!user,
